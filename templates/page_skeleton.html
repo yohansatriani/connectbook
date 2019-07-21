@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}{% endblock %}</title>
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+        <!-- Toastr style -->
+        <link href="{% static 'css/plugins/toastr/toastr.min.css' %}" rel="stylesheet">
+        <!-- Gritter -->
+        <link href="{% static 'js/plugins/gritter/jquery.gritter.css' %}" rel="stylesheet">
+        <!-- Basic -->
+        <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="wrapper">
+            <!-- panel-left -->
+            {% block panel-left %}{% endblock %}
+            <!-- end panel-left -->
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <!-- row-top -->
+                {% block row-top %}{% endblock %}
+                <!-- end row-top -->
+                <!-- row-mid -->
+                {% block row-mid %}{% endblock %}
+                <!-- end row-mid -->
+                <!-- row-content -->
+                {% block row-content %}{% endblock %}
+                <!-- end row-content -->
+                <!-- row-footer -->
+                {% block row-footer %}{% endblock %}
+                <!-- end row-footer -->
+            </div>
+            <!-- optional-part -->
+            {% block opt-part %}{% endblock %}
+            <!-- end optional-part -->
+            <!-- sidebar-right -->
+            {% block sidebar-right %}{% endblock %}
+            <!-- end sidebar-right -->
+        </div>
+        <!-- script-js -->
+        {% block script-js %}{% endblock %}
+        <!-- end script-js -->
+    </body>
+</html>
