@@ -13,6 +13,13 @@
     </head>
     <body class="gray-bg">
         <div class="loginColumns animated fadeInDown">
+            <div class="row justify-content-md-center fixed-top">
+                <div class="col-md-8">
+                    {% for message in messages %}
+                    <div class="alert alert-danger alert-dismissable text-center"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="font-bold">Welcome to ConnectBook</h2>
@@ -48,13 +55,10 @@
             </div>
             <hr/>
             <div class="row">
-                <div class="col-md-6">
-                    Copyright @yohansatriani
-                </div>
-                <div class="col-md-6 text-right">
-                    <small>© 2018-2019</small>
-                </div>
+                <div class="col-md-6">Copyright @yohansatriani</div>
+                <div class="col-md-6 text-right"><small>© 2018-2019</small></div>
             </div>
         </div>
+        {% include 'script_js.html' %}
     </body>
 </html>
