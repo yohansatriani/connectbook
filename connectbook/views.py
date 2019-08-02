@@ -45,5 +45,5 @@ def auth_logout(request):
 
 @login_required()
 def home(request):
-    html = render_to_string('page_home.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home']]})
+    html = render_to_string('page_home_dashboard.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home']]})
     return HttpResponse(html)

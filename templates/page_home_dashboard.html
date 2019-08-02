@@ -6,7 +6,7 @@
         <!-- <meta charset="utf-8"> -->
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
         <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-        {% block title %}INSPINIA{% endblock %}
+        {% block title %}CB | {{ title }}{% endblock %}
         <!-- <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> -->
         <!-- <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet"> -->
         <!-- Toastr style -->
@@ -21,25 +21,25 @@
         <!-- <div id="wrapper"> -->
             <!-- panel-left -->
             {% block panel-left %}
-            {% include 'comp_panel_left.html' %}
+            {% include 'comp_panel_left_dashboard.html' %}
             {% endblock %}
             <!-- end panel-left -->
             <!-- <div id="page-wrapper" class="gray-bg dashbard-1"> -->
                 <!-- row-top -->
                 {% block row-top %}
-                {% include 'comp_row_top.html' %}
+                {% include 'comp_row_top_dashboard.html' %}
                 {% endblock %}
                 <!-- end row-top -->
                 <!-- row-mid -->
                 {% block row-mid %}
-                {% include 'comp_row_mid.html' %}
+                {% include 'comp_row_mid_dashboard.html' %}
                 {% endblock %}
                 <!-- end row-mid -->
-                <!-- row-bottom -->
+                <!-- row-content -->
                 {% block row-bottom %}
-                {% include 'comp_row_bottom.html' %}
+                {% include 'comp_row_content.html' %}
                 {% endblock %}
-                <!-- end row-bottom -->
+                <!-- end row-content -->
                 <!-- row-footer -->
                 {% block row-footer %}
                 {% include 'comp_row_footer.html' %}
@@ -54,7 +54,7 @@
         <!-- </div> -->
         <!-- script-js -->
         {% block script-js %}
-        {% include 'script_js.html' %}
+        {% include 'script_js_dashboard.html' %}
         {% endblock %}
         <!-- end script-js -->
     <!-- </body> -->

@@ -15,6 +15,20 @@ class sites(models.Model):
         verbose_name_plural = "sites"
 
     def __str__(self):
-        return u'%s %s %s %s %s %s %s %s %s %s' %(
-            self.id, self.name, self.type, self.location, self.city, self.description, self.ipadd, self.site_code, self.area_code, self.tagline
+        return u'%s %s %s %s %s %s %s %s' %(
+            self.id, self.name, self.type, self.location, self.city, self.description, self.ipadd, self.tagline
+        )
+
+class contacts(models.Model):
+    id = models.AutoField(primary_key=True)
+    site = models.ForeignKey(sites, on_delete=models.CASCADE, null=False)
+    type = models.CharField(max_length=10, null=False, default='')
+    contact_number = models.CharField(max_length=50, null=False, default='')
+
+    class Meta:
+        verbose_name_plural = "contacts"
+
+    def __str__(self):
+        return u'%s %s' %(
+            self.site, self.type
         )

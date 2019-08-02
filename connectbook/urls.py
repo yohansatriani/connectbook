@@ -20,6 +20,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from connectbook.views import base, home, auth_login, auth_process, auth_logout
+from netinfo.views import sites
 
 
 urlpatterns = [
