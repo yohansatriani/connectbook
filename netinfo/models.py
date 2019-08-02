@@ -5,11 +5,11 @@ class sites(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False)
     type = models.CharField(max_length=50, null=False)
-    location = models.CharField(max_length=300, default='')
-    city = models.CharField(max_length=100, default='')
-    description = models.CharField(max_length=1000, default='')
-    ipadd = models.CharField(max_length=100, default='0.0.0.0/0')
-    tagline = models.CharField(max_length=500, default='')
+    location = models.CharField(max_length=300, default='', null=True)
+    city = models.CharField(max_length=100, default='', null=True)
+    description = models.CharField(max_length=1000, default='', null=True)
+    ipadd = models.CharField(max_length=100, default='0.0.0.0/0', null=True)
+    tagline = models.CharField(max_length=500, default='', null=True)
 
     class Meta:
         verbose_name_plural = "sites"
