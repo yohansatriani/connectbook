@@ -36,4 +36,6 @@ urlpatterns = [
     path('accounts/logout/', auth_logout, name='logout'),
     #BASE
     path('home/', home, name='home'),
+    #NETINFO
+    path('sites/', sites, name='sites'),
 ]

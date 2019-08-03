@@ -1,11 +1,10 @@
 from django.template.loader import get_template, render_to_string
-from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Template, Context
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 def base(request):
@@ -14,7 +13,7 @@ def base(request):
 
 def auth_login(request):
     if not request.user.is_authenticated:
-        return render(request, 'account_login.html', {'title': "CB | Login", 'head': "Login"})
+        return render(request, 'accounts/login.html', {'title': "CB | Login", 'head': "Login"})
     else:
         return redirect(home)
 
@@ -45,5 +44,5 @@ def auth_logout(request):
 
 @login_required()
 def home(request):
-    html = render_to_string('page_home_dashboard.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home']]})
+    html = render_to_string('home/page_home.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home']]})
     return HttpResponse(html)
