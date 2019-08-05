@@ -7,9 +7,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-def base(request):
-    html = render_to_string('page_base.html')
-    return HttpResponse(html)
+def inspinia(request):
+    return render(request, '#inspinia/page_home_ori.html', {'title': "INSPINIA", 'head': "INSPINIA"})
 
 def auth_login(request):
     if not request.user.is_authenticated:

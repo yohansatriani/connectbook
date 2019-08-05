@@ -19,15 +19,15 @@ from django.urls import path
 #login
 from django.contrib.auth import views as auth_views
 
-from connectbook.views import base, home, auth_login, auth_process, auth_logout
+from connectbook.views import inspinia, home, auth_login, auth_process, auth_logout
 from netinfo.views import sites
 
 
 urlpatterns = [
+    #INSPINIA
+    path('inspinia/', inspinia, name='inspinia'),
     #DJANGO ADMIN
     path('admin/', admin.site.urls),
-    #BASE
-    path('base/', base, name='base'),
     #LOGIN
     path('accounts/login/', auth_login, name='login'),
     #AUTH
