@@ -3,15 +3,13 @@
                     <div class="col-lg-10">
                         <h2>{{ title }}</h2>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="index.html">Home</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a>UI Elements</a>
-                            </li>
-                            <li class="breadcrumb-item active">
-                                <strong>Typography</strong>
-                            </li>
+                            {% for bclink, bclabel in bcitems %}
+                            {% if forloop.last %}
+                            <li class="breadcrumb-item active"><strong>{{ bclabel }}</strong></li>
+                            {% else %}
+                            <li class="breadcrumb-item"><a href="{{ bclink }}">{{ bclabel }}</a></li>
+                            {% endif %}
+                            {% endfor %}
                         </ol>
                     </div>
                     <div class="col-lg-2"></div>

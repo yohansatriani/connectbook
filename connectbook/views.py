@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 def inspinia(request):
-    return render(request, '#inspinia/page_home_ori.html', {'title': "INSPINIA", 'head': "INSPINIA"})
+    return render(request, '.inspinia/page_home_ori.html', {'title': "INSPINIA", 'head': "INSPINIA"})
 
 def auth_login(request):
     if not request.user.is_authenticated:
@@ -43,4 +43,5 @@ def auth_logout(request):
 
 @login_required()
 def home(request):
-    return render(request, 'home/page_home.html', {'title': "Home", 'head': "Home"})
+    bcitems = [['/home/', 'Home']]
+    return render(request, 'home/page_home.html', {'title': "Home", 'head': "Home", 'bcitems': bcitems})

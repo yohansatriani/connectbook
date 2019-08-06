@@ -7,7 +7,7 @@ from netinfo.models import sites as sites_model
 # Create your views here.
 @login_required()
 def sites(request):
-    site_data = sites_model.objects.all()
+    sites_data = sites_model.objects.all()
 
-    bcitems = [['/home/', 'Home'], ['/sites/', 'Sites']]
-    return render(request, 'netinfo/page_sites.html', {'title': "Sites", 'head': "Sites"})
+    bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites']]
+    return render(request, 'netinfo/page_sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'sites_data': sites_data})
