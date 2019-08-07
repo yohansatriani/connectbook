@@ -9,6 +9,10 @@ class sites(models.Model):
     city = models.CharField(max_length=100, default='', null=True)
     description = models.CharField(max_length=1000, default='', null=True)
     ipadd = models.CharField(max_length=100, default='0.0.0.0/0', null=True)
+    add_field1 = models.CharField(max_length=100, null=True)
+    add_field2 = models.CharField(max_length=100, null=True)
+    add_field3 = models.CharField(max_length=100, null=True)
+    add_field4 = models.CharField(max_length=100, null=True)
     tagline = models.CharField(max_length=500, default='', null=True)
 
     class Meta:

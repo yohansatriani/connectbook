@@ -65,6 +65,8 @@
                                                     <th>Site Name</th>
                                                     <th>IP Address</th>
                                                     <th>Address</th>
+                                                    <th>Site Code</th>
+                                                    <th>Area Code</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -75,6 +77,8 @@
                                                     <td>{{ item.name }}</td>
                                                     <td>{{ item.ipadd }}</td>
                                                     <td>{{ item.location }}, {{ item.city }}</td>
+                                                    <td>{{ item.add_field1 }}</td>
+                                                    <td>{{ item.add_field2 }}</td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -85,6 +89,8 @@
                                                     <th>Site Name</th>
                                                     <th>IP Address</th>
                                                     <th>Address</th>
+                                                    <th>Site Code</th>
+                                                    <th>Area Code</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
