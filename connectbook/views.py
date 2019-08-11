@@ -10,6 +10,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 def inspinia(request):
     return render(request, '.inspinia/page_home_ori.html', {'title': "INSPINIA", 'head': "INSPINIA"})
 
+def sites_detail(request):
+    return render(request, 'netinfo/page_sites_detail.html', {'title': "Sites Detail", 'head': "Sites Detail"})
+
 def auth_login(request):
     if not request.user.is_authenticated:
         return render(request, 'accounts/login.html', {'title': "Login", 'head': "Login"})

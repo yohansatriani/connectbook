@@ -19,7 +19,7 @@ from django.urls import path
 #login
 from django.contrib.auth import views as auth_views
 
-from connectbook.views import inspinia, home, auth_login, auth_process, auth_logout
+from connectbook.views import inspinia, home, auth_login, auth_process, auth_logout, sites_detail
 from netinfo.views import sites
 
 
@@ -38,4 +38,6 @@ urlpatterns = [
     path('home/', home, name='home'),
     #SITES
     path('sites/', sites, name='sites'),
+    #SITES_DETAIL
+    path('sites/site-name', sites_detail, name='sites_detail'),
 ]

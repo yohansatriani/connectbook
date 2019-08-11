@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="ibox-content">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                                        <table class="table table-striped table-bordered table-hover dataTables-sites" >
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -67,6 +67,7 @@
                                                     <th>Address</th>
                                                     <th>Site Code</th>
                                                     <th>Area Code</th>
+                                                    <th>Detail</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -75,10 +76,11 @@
                                                     <td>{{ forloop.counter }}</td>
                                                     <td>{{ item.type }}</td>
                                                     <td>{{ item.name }}</td>
-                                                    <td>{{ item.ipadd }}</td>
+                                                    <td>{{ item.ip_address }}</td>
                                                     <td>{{ item.location }}, {{ item.city }}</td>
                                                     <td>{{ item.add_field1 }}</td>
                                                     <td>{{ item.add_field2 }}</td>
+                                                    <td><a href="{% url 'sites_detail' %}" class="btn btn-xs btn-primary"> More info</a></td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -91,6 +93,7 @@
                                                     <th>Address</th>
                                                     <th>Site Code</th>
                                                     <th>Area Code</th>
+                                                    <th>Detail</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
