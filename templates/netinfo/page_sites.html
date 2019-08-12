@@ -38,21 +38,7 @@
                                 <div class="ibox-title">
                                     <h5>Data Sites</h5>
                                     <div class="ibox-tools">
-                                        <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                        </a>
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="fa fa-wrench"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-user">
-                                            <li><a href="#" class="dropdown-item">Config option 1</a>
-                                            </li>
-                                            <li><a href="#" class="dropdown-item">Config option 2</a>
-                                            </li>
-                                        </ul>
-                                        <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                        </a>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </div>
                                 </div>
                                 <div class="ibox-content">
@@ -67,7 +53,7 @@
                                                     <th>Address</th>
                                                     <th>Site Code</th>
                                                     <th>Area Code</th>
-                                                    <th>Detail</th>
+                                                    <th>Option</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -80,7 +66,11 @@
                                                     <td>{{ item.location }}, {{ item.city }}</td>
                                                     <td>{{ item.add_field1 }}</td>
                                                     <td>{{ item.add_field2 }}</td>
-                                                    <td><a href="{% url 'sites_detail' %}" class="btn btn-xs btn-primary"> More info</a></td>
+                                                    <td>
+                                                        <a href="{{ item.alias_name }}" class="btn btn-xs btn-default"><i class="fa fa-ellipsis-h"></i></a>
+                                                        <a href="{{ item.alias_name }}/edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                                        <a href="{{ item.alias_name }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -93,7 +83,7 @@
                                                     <th>Address</th>
                                                     <th>Site Code</th>
                                                     <th>Area Code</th>
-                                                    <th>Detail</th>
+                                                    <th>Option</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

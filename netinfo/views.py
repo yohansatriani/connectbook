@@ -1,5 +1,5 @@
 from django.template.loader import get_template, render_to_string
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from netinfo.models import sites as sites_model
@@ -7,19 +7,19 @@ from netinfo.models import sites as sites_model
 # Create your views here.
 @login_required()
 def sites(request):
-    sites_data = sites_model.objects.all()
+    sites_data = sites_model.objects.order_by('type', 'name')
 
     bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites']]
     return render(request, 'netinfo/page_sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'sites_data': sites_data})
 
 @login_required()
-def sites_detail(request, site_id):
+def sites_detail(request, alias_name):
     try:
-        site_id = int(site_id)
+        alias_name = alias_name
     except ValueError:
         raise Http404()
     #site info
-    site_data = get_object_or_404(sites_model, id=site_id)
+    sites_data = get_object_or_404(sites_model, alias_name=alias_name)
     #contact info
     #contacts_data = contacts_model.objects.filter(site = site_id)
     #link info
@@ -27,5 +27,5 @@ def sites_detail(request, site_id):
     #device info
     #dev_data = dev_model.objects.filter(location_id = site_id)
     # breadcrumbs
-    bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], [site_id, site_data.name]]
-    return render(request, "netinfo/page-sites-detail.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data , 'contacts_data': contacts_data})
+    bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], [alias_name, sites_data.name]]
+    return render(request, "netinfo/page_sites_detail.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'sites_data': sites_data})
