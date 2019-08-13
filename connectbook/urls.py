@@ -22,6 +22,8 @@ from django.contrib.auth import views as auth_views
 from connectbook.views import inspinia, home, auth_login, auth_process, auth_logout
 from netinfo.views import sites, sites_detail
 
+handler404 = 'connectbook.views.error404'
+handler500 = 'connectbook.views.error500'
 
 urlpatterns = [
     #INSPINIA

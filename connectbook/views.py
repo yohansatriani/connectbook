@@ -10,6 +10,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 def inspinia(request):
     return render(request, '.inspinia/page_home_ori.html', {'title': "INSPINIA", 'head': "INSPINIA"})
 
+def error404(request, exception):
+    return render(request, 'error/404.html', status = 404)
+
+def error500(request):
+    return render(request, 'error/500.html', status = 500)
+
 #def sites_detail(request):
 #    return render(request, 'netinfo/page_sites_detail.html', {'title': "Sites Detail", 'head': "Sites Detail"})
 
