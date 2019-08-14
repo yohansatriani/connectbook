@@ -53,23 +53,23 @@
                                                     <th>Address</th>
                                                     <th>Site Code</th>
                                                     <th>Area Code</th>
-                                                    <th style="min-width: 60px">Option</th>
+                                                    <th style="min-width: 60px"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for item in sites_data %}
+                                                {% for site in site_data %}
                                                 <tr class="gradeX">
                                                     <td>{{ forloop.counter }}</td>
-                                                    <td>{{ item.type }}</td>
-                                                    <td>{{ item.name }}</td>
-                                                    <td>{{ item.ip_address }}</td>
-                                                    <td>{{ item.location }}, {{ item.city }}</td>
-                                                    <td>{{ item.add_field1 }}</td>
-                                                    <td>{{ item.add_field2 }}</td>
-                                                    <td>
-                                                        <a href="{{ item.alias_name }}" class="btn btn-xs btn-default"><i class="fa fa-ellipsis-h"></i></a>
-                                                        <a href="{{ item.alias_name }}/edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                                                        <a href="{{ item.alias_name }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                                    <td>{{ site.type }}</td>
+                                                    <td>{{ site.name }}</td>
+                                                    <td>{{ site.ip_address }}</td>
+                                                    <td>{{ site.location }}, {{ site.city }}</td>
+                                                    <td>{{ site.add_field1 }}</td>
+                                                    <td>{{ site.add_field2 }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{{ site.alias_name }}" class="btn btn-xs btn-default"><i class="fa fa-ellipsis-h"></i></a>
+                                                        <a href="{{ site.alias_name }}/edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                                        <a href="{{ site.alias_name }}/delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
                                                     </td>
                                                 </tr>
                                                 {% endfor %}
@@ -83,7 +83,7 @@
                                                     <th>Address</th>
                                                     <th>Site Code</th>
                                                     <th>Area Code</th>
-                                                    <th>Option</th>
+                                                    <th></th>
                                                 </tr>
                                             </tfoot>
                                         </table>

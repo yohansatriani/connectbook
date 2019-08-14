@@ -14,13 +14,17 @@
                                     <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
                                     <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
                                     <li class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                                 </ul>
                             </div>
                             <div class="logo-element">CB</div>
                         </li>
                         <li>
-                            <a href="{% url 'home' %}"><i class="fa fa-th-large"></i><span class="nav-label">Dashboards</span><span class="fa arrow"></span></a>
+                            <a href="{% url 'home' %}"><i class="fa fa-th-large"></i><span class="nav-label">Home</span></a>
+                        </li>
+                        <li><hr class="m-0"/></li>
+                        <li>
+                            <a class="btn disabled text-left" href="#"><span class="nav-label">Network Info</span></a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Sites</span><span class="fa arrow"></span></a>
@@ -51,6 +55,19 @@
                                 <li><a href="search_results.html">Add Site</a></li>
                                 <li><a href="lockscreen.html">Add Link</a></li>
                                 <li><a href="invoice.html">Add Device</a></li>
+                            </ul>
+                        </li>
+                        <li><hr class="m-0"/></li>
+                        <li>
+                            <a class="btn disabled text-left" href="#"><span class="nav-label">SLA</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Trouble</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="contacts.html">All Devices</a></li>
+                                <li><a href="profile.html">Routers</a></li>
+                                <li><a href="profile_2.html">Switches</a></li>
+                                <li><a href="contacts_2.html">Add Device</a></li>
                             </ul>
                         </li>
                     </ul>

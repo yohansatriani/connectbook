@@ -53,4 +53,4 @@ def auth_logout(request):
 @login_required()
 def home(request):
     bcitems = [['/home/', 'Home']]
-    return render(request, 'home/page_home.html', {'title': "Home", 'head': "Home", 'bcitems': bcitems})
+    return render(request, 'home/page_home.html', {'title': "Home", 'head': "Home"})

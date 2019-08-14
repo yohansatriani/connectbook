@@ -2,6 +2,7 @@
                 <div class="row wrapper border-bottom white-bg page-heading">
                     <div class="col-lg-10">
                         <h2>{{ title }}</h2>
+                        {% if bcitems %}
                         <ol class="breadcrumb">
                             {% for bclink, bclabel in bcitems %}
                             {% if forloop.last %}
@@ -11,6 +12,7 @@
                             {% endif %}
                             {% endfor %}
                         </ol>
+                        {% endif %}
                     </div>
                     <div class="col-lg-2"></div>
                 </div>
