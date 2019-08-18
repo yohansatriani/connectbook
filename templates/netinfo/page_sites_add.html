@@ -1,0 +1,115 @@
+{% extends "basic/page_skeleton.html" %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<!-- <html> -->
+    <!-- <head> -->
+        <!-- <meta charset="utf-8"> -->
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+        {% block title %}{{ title }}{% endblock %}
+        {% block css %}
+        {% include 'netinfo/comp_css_sites.html' %}
+        {% endblock %}
+    <!-- </head> -->
+    <!-- <body> -->
+        <!-- <div id="wrapper"> -->
+            <!-- panel-left -->
+            {% block panel-left %}
+            {% include 'basic/comp_panel_left.html' %}
+            {% endblock %}
+            <!-- end panel-left -->
+            <!-- <div id="page-wrapper" class="gray-bg dashbard-1"> -->
+                <!-- row-top -->
+                {% block row-top %}
+                {% include 'basic/comp_row_top.html' %}
+                {% endblock %}
+                <!-- end row-top -->
+                <!-- row-mid -->
+                {% block row-mid %}
+                {% include 'basic/comp_row_mid.html' %}
+                {% endblock %}
+                <!-- end row-mid -->
+                <!-- row-content -->
+                {% block row-content %}
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-6">
+                            <div class="ibox ">
+                                <div class="ibox-title">
+                                    <h5>New Site</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <form role="form" id="form" action="{% url 'sites_add' %}" method="post">
+                                        {% csrf_token %}
+                                        {{ sites_form.non_field_errors }}
+                                        {% for field in sites_form.visible_fields %}
+                                        <div class="form-group row">
+                                            <label for="{{ field.id_for_label }}" class="col-lg-2 col-form-label">{{ field.label }}</label>
+                                            {% if sites_form.is_bound %}
+                                            {% if field.errors %}
+                                            <div class="col-lg-10">
+                                            {% render_field field class="form-control" %}
+                                            {% if field.help_text %}
+                                                <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                            {% endif %}
+                                            {% for error in field.errors %}
+                                                <label id="-error" class="error" for="">{{ error }}</label>
+                                            {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            <div class="col-lg-10">
+                                            {% render_field field class="form-control" %}
+                                            {% if field.help_text %}
+                                                <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                            {% endif %}
+                                            </div>
+                                            {% endif %}
+                                            {% else %}
+                                            <div class="col-lg-10">
+                                            {% render_field field class="form-control" %}
+                                            {% if field.help_text %}
+                                                <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                            {% endif %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        {% endfor %}
+                                        <hr/>
+                                        <button class="btn btn-secondary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#contact-collapse" aria-expanded="false" aria-controls="contact-collapse">Contacts</button>
+                                        <div class="collapse" id="contact-collapse">
+                                            <div class="dynamic-stuff"></div>
+                                            <div><button type="button" class="btn btn-success btn-sm add-one"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
+                                        </div>
+                                        <hr/>
+                                        <div class="card-text text-sm-right">
+                                            <a class="small"><button type="submit" class="btn btn-primary btn-sm" id="submit-site-contact">Submit</button></a>
+                                            <a class="small"><button type="reset" class="btn btn-danger btn-sm" id="reset-site-contact">Reset</button></a>
+                                            <a class="small" href=".."><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+                <!-- end row-content -->
+                <!-- row-footer -->
+                {% block row-footer %}
+                {% include 'basic/comp_row_footer.html' %}
+                {% endblock %}
+                <!-- end row-footer -->
+            <!-- </div> -->
+            <!-- sidebar-right -->
+            {% block sidebar-right %}
+            {% endblock %}
+            <!-- end sidebar-right -->
+        <!-- </div> -->
+        <!-- script-js -->
+        {% block script-js %}
+        {% include 'scripts/script_js_sites_add.html' %}
+        {% endblock %}
+        <!-- end script-js -->
+    <!-- </body> -->
+<!-- </html> -->
