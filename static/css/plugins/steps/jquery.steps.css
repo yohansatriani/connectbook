@@ -134,7 +134,7 @@
 
 .wizard > .content
 {
-    background: #eee;
+    background: #fff;
     display: block;
     margin: 5px 5px 10px 5px;
     min-height: 120px;
@@ -162,7 +162,7 @@
 {
     float: left;
     position: absolute;
-    width: 95%;
+    width: 100%;
     height: 95%;
     padding: 2.5%;
 }
@@ -212,7 +212,7 @@
 {
     color: #8a1f11;
     display: inline-block;
-    margin-left: 1.5em;
+    margin-left: 0em;
 }
 
 .wizard > .actions

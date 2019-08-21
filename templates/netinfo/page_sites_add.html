@@ -38,53 +38,48 @@
                             <div class="ibox">
                                 <div class="ibox-title">
                                     <h5>New Site</h5>
-                                    <div class="ibox-tools">
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu dropdown-user">
-                                            <li><a href="#" class="dropdown-item">Config option 1</a></li>
-                                            <li><a href="#" class="dropdown-item">Config option 2</a></li>
-                                        </ul>
-                                        <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                        </a>
-                                    </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <form id="form" action="#" class="wizard-big">
-                                        <h1>Site</h1>
+                                    <form role="form" id="site-form" action="{% url 'sites_add' %}" method="post" class="wizard-big">
+                                        <h3>Site Information</h3>
                                         <fieldset>
-                                            <div class="row">
-                                                <div class="col-lg-8">
-                                                    <div class="form-group">
-                                                        <label>Username *</label>
-                                                        <input id="userName" name="userName" type="text" class="form-control required">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Password *</label>
-                                                        <input id="password" name="password" type="text" class="form-control required">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Confirm Password *</label>
-                                                        <input id="confirm" name="confirm" type="text" class="form-control required">
-                                                    </div>
+                                            {% csrf_token %}
+                                            {{ sites_form.non_field_errors }}
+                                            {% for field in sites_form.visible_fields %}
+                                            <div class="form-group row">
+                                                <label for="{{ field.id_for_label }}" class="col-lg-2 col-form-label">{{ field.label }}</label>
+                                                {% if sites_form.is_bound %}
+                                                {% if field.errors %}
+                                                <div class="col-lg-10">
+                                                {% render_field field class="form-control" %}
+                                                {% if field.help_text %}
+                                                    <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                                {% endif %}
+                                                {% for error in field.errors %}
+                                                    <label id="-error" class="error" for="">{{ error }}</label>
+                                                {% endfor %}
                                                 </div>
+                                                {% else %}
+                                                <div class="col-lg-10">
+                                                {% render_field field class="form-control" %}
+                                                {% if field.help_text %}
+                                                    <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                                {% endif %}
+                                                </div>
+                                                {% endif %}
+                                                {% else %}
+                                                <div class="col-lg-10">
+                                                {% render_field field class="form-control" %}
+                                                {% if field.help_text %}
+                                                    <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                                {% endif %}
+                                                </div>
+                                                {% endif %}
                                             </div>
+                                        {% endfor %}
                                         </fieldset>
-                                        <h1>Contacts</h1>
+                                        <h3>Contacts</h3>
                                         <fieldset>
-                                            <div class="row">
-                                                <div class="col-lg-8">
-                                                    <div class="form-group">
-                                                        <label>First name *</label>
-                                                        <input id="name" name="name" type="text" class="form-control required">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Last name *</label>
-                                                        <input id="surname" name="surname" type="text" class="form-control required">
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </fieldset>
                                     </form>
                                 </div>

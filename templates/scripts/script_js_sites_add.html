@@ -17,23 +17,31 @@
         <script>
             $(document).ready(function(){
                 $("#wizard").steps();
-                $("#form").steps({
+                $("#site-form").steps({
+                    /* Labels */
+                    labels: {
+                        cancel: "Reset",
+                        current: "current step:",
+                        pagination: "Pagination",
+                        finish: "Finish",
+                        next: "Next",
+                        previous: "Previous",
+                        loading: "Loading ..."
+                    },
+
+                    headerTag: "h3",
                     bodyTag: "fieldset",
+                    // titleTemplate: "#title#",
+                    titleTemplate: '<center>#title#</center>',
                     enableFinishButton: true,
+                    enableCancelButton: true,
                     enablePagination: true,
-                    titleTemplate: "#title#",
                     onStepChanging: function (event, currentIndex, newIndex)
                     {
                         // Always allow going backward even if the current step contains invalid fields!
                         if (currentIndex > newIndex)
                         {
                             return true;
-                        }
-
-                        // Forbid suppressing "Warning" step if the user is to young
-                        if (newIndex === 3 && Number($("#age").val()) < 18)
-                        {
-                            return false;
                         }
 
                         var form = $(this);
@@ -83,11 +91,21 @@
 
                         // Submit form input
                         form.submit();
+                    },
+                    onCanceled: function (event)
+                    {
+                        var validator = $( "#site-form" ).validate();
+                        var form = $(this);
+                        //reset form
+                        validator.resetForm();
+                        $('#site-form').trigger("reset");
+                        $(".body:eq(" + 0 + ") label.error", form).remove();
+                        $(".body:eq(" + 0 + ") .error", form).removeClass("error");
                     }
                 }).validate({
                             errorPlacement: function (error, element)
                             {
-                                element.before(error);
+                                element.after(error);
                             },
                             rules: {
                                 confirm: {
