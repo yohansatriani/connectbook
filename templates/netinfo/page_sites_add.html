@@ -41,16 +41,16 @@
                                 </div>
                                 <div class="ibox-content">
                                     <form role="form" id="site-form" action="{% url 'sites_add' %}" method="post" class="wizard-big">
-                                        <h3>Site Information</h3>
+                                        <h3>Site Info</h3>
                                         <fieldset>
                                             {% csrf_token %}
                                             {{ sites_form.non_field_errors }}
                                             {% for field in sites_form.visible_fields %}
                                             <div class="form-group row">
-                                                <label for="{{ field.id_for_label }}" class="col-lg-2 col-form-label">{{ field.label }}</label>
+                                                <label for="{{ field.id_for_label }}" class="col-lg-3 col-form-label">{{ field.label }}</label>
                                                 {% if sites_form.is_bound %}
                                                 {% if field.errors %}
-                                                <div class="col-lg-10">
+                                                <div class="col-lg-9">
                                                 {% render_field field class="form-control" %}
                                                 {% if field.help_text %}
                                                     <span class="form-text m-b-none">{{ field.help_text }}</span>
@@ -60,7 +60,7 @@
                                                 {% endfor %}
                                                 </div>
                                                 {% else %}
-                                                <div class="col-lg-10">
+                                                <div class="col-lg-9">
                                                 {% render_field field class="form-control" %}
                                                 {% if field.help_text %}
                                                     <span class="form-text m-b-none">{{ field.help_text }}</span>
@@ -68,7 +68,7 @@
                                                 </div>
                                                 {% endif %}
                                                 {% else %}
-                                                <div class="col-lg-10">
+                                                <div class="col-lg-9">
                                                 {% render_field field class="form-control" %}
                                                 {% if field.help_text %}
                                                     <span class="form-text m-b-none">{{ field.help_text }}</span>
@@ -80,69 +80,30 @@
                                         </fieldset>
                                         <h3>Contacts</h3>
                                         <fieldset>
+                                            <div id="dynamic-contact">
+                                                <div class="repeater-heading m-b">
+                                                    <button type="button" class="btn btn-w-m btn-outline btn-primary repeater-add-btn">Add</button>
+                                                </div>
+                                                <div class="items" data-group="contact">
+                                                    <div class="input-group m-b">
+                                                        <select class="custom-select col-md-3" data-name="type">
+                                                            {% for item in contact_types %}
+                                                            <option value="item.contact_type">{{ item.contact_type|upper }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                        <input type="text" class="col p-w-sm" data-name="contact_data">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline btn-danger" type="button" onclick="$(this).parents('.items').remove()">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </fieldset>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-lg-6">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>New Site</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <form role="form" id="form" action="{% url 'sites_add' %}" method="post">
-                                    {% csrf_token %}
-                                    {{ sites_form.non_field_errors }}
-                                    {% for field in sites_form.visible_fields %}
-                                    <div class="form-group row">
-                                        <label for="{{ field.id_for_label }}" class="col-lg-2 col-form-label">{{ field.label }}</label>
-                                        {% if sites_form.is_bound %}
-                                        {% if field.errors %}
-                                        <div class="col-lg-10">
-                                        {% render_field field class="form-control" %}
-                                        {% if field.help_text %}
-                                            <span class="form-text m-b-none">{{ field.help_text }}</span>
-                                        {% endif %}
-                                        {% for error in field.errors %}
-                                            <label id="-error" class="error" for="">{{ error }}</label>
-                                        {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        <div class="col-lg-10">
-                                        {% render_field field class="form-control" %}
-                                        {% if field.help_text %}
-                                            <span class="form-text m-b-none">{{ field.help_text }}</span>
-                                        {% endif %}
-                                        </div>
-                                        {% endif %}
-                                        {% else %}
-                                        <div class="col-lg-10">
-                                        {% render_field field class="form-control" %}
-                                        {% if field.help_text %}
-                                            <span class="form-text m-b-none">{{ field.help_text }}</span>
-                                        {% endif %}
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                    {% endfor %}
-                                    <hr/>
-                                    <button class="btn btn-secondary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#contact-collapse" aria-expanded="false" aria-controls="contact-collapse">Contacts</button>
-                                    <div class="collapse" id="contact-collapse">
-                                        <div class="dynamic-stuff"></div>
-                                        <div><button type="button" class="btn btn-success btn-sm add-one"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
-                                    </div>
-                                    <hr/>
-                                    <div class="card-text text-sm-right">
-                                        <a class="small"><button type="submit" class="btn btn-primary btn-sm" id="submit-site-contact">Submit</button></a>
-                                        <a class="small"><button type="reset" class="btn btn-danger btn-sm" id="reset-site-contact">Reset</button></a>
-                                        <a class="small" href=".."><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 {% endblock %}
                 <!-- end row-content -->

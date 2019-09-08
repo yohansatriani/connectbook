@@ -10,12 +10,28 @@
         <script src="{% static 'js/plugins/pace/pace.min.js' %}"></script>
         <!-- jquery-ui-->
         <script src="{% static 'js/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+        <!-- dynamic-form-->
+        <script src="{% static 'js/plugins/dynamicform/dynamicForm.js' %}"></script>
+        <script src="{% static 'js/plugins/dynamicform/repeater.js' %}"></script>
         <!-- jquery steps -->
         <script src="{% static 'js/plugins/steps/jquery.steps.min.js' %}"></script>
         <!-- validate.js -->
         <script src="{% static 'js/plugins/validate/jquery.validate.min.js' %}"></script>
         <script>
             $(document).ready(function(){
+                $.fn.steps.setStep = function (step)
+                {
+                    var currentIndex = $(this).steps('getCurrentIndex');
+                    for(var i = 0; i < Math.abs(step - currentIndex); i++){
+                        if(step > currentIndex) {
+                            $(this).steps('next');
+                        }
+                        else{
+                            $(this).steps('previous');
+                        }
+                    }
+                };
+
                 $("#wizard").steps();
                 $("#site-form").steps({
                     /* Labels */
@@ -62,11 +78,6 @@
                     },
                     onStepChanged: function (event, currentIndex, priorIndex)
                     {
-                        // Suppress (skip) "Warning" step if the user is old enough.
-                        if (currentIndex === 2 && Number($("#age").val()) >= 18)
-                        {
-                            $(this).steps("next");
-                        }
 
                         // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
                         if (currentIndex === 2 && priorIndex === 3)
@@ -99,8 +110,8 @@
                         //reset form
                         validator.resetForm();
                         $('#site-form').trigger("reset");
-                        $(".body:eq(" + 0 + ") label.error", form).remove();
-                        $(".body:eq(" + 0 + ") .error", form).removeClass("error");
+                        $("#site-form").steps("setStep", 0);
+                        $("div.steps ul li").removeClass("error");
                     }
                 }).validate({
                             errorPlacement: function (error, element)
@@ -113,5 +124,9 @@
                                 }
                             }
                         });
+
+            $(function(){$("#dynamic-contact").createRepeater();});
+
+
            });
     </script>

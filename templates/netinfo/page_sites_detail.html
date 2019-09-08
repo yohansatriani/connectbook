@@ -112,12 +112,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="ibox-content">
-                                                    {% if contacts_data %}
+                                                    {% if contact_data %}
                                                     <table class="table table-hover">
                                                         {% for contact in contact_data %}
                                                         <tr>
                                                             <th style="width: 30%">{{ contact.type|title }}</th>
-                                                            <td>{{ contact.contact_number }}</td>
+                                                            <td>{{ contact.contact_data }}</td>
                                                         </tr>
                                                         {% endfor %}
                                                     </table>

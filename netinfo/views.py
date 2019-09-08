@@ -1,8 +1,14 @@
+import json
+from pprint import pprint
+
 from django.template.loader import get_template, render_to_string
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
+from django.core.serializers.json import DjangoJSONEncoder
+
 from netinfo.models import sites as sites_model, contacts as contacts_model
+from cms.models import contact_types as contact_types_model
 
 from netinfo.forms import SitesForm
 
@@ -24,7 +30,7 @@ def sites_detail(request, alias_name):
     #site info
     site_data = get_object_or_404(sites_model, alias_name=alias_name)
     #contact info
-    contact_data = contacts_model.objects.filter(site = site_data.id)
+    contact_data = contacts_model.objects.filter(site_id = site_data.id)
     #link info
     #links_data = links_model.objects.filter(Q(sites1=site_id)|Q(sites2=site_id))
     #device info
@@ -42,7 +48,7 @@ def sites_detail_id(request, site_id):
     #site info
     site_data = get_object_or_404(sites_model, id=site_id)
     #contact info
-    contact_data = contacts_model.objects.filter(site = site_id)
+    contact_data = contacts_model.objects.filter(site_id = site_id)
     #link info
     #links_data = links_model.objects.filter(Q(sites1=site_id)|Q(sites2=site_id))
     #device info
@@ -112,8 +118,11 @@ def sites_add(request):
             bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/add/', 'Add Site']]
             return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'site_form': site_form})
     else:
+        contact_types = contact_types_model.objects.values('contact_type')
+        # contact_types_json = json.dumps(list(contact_types), cls=DjangoJSONEncoder)
+
         sites_form = SitesForm()
 
         #breadcrumbs
         bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/add/', 'Add Site']]
-        return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'sites_form': sites_form})
+        return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'sites_form': sites_form, 'contact_types': contact_types})

@@ -21,14 +21,14 @@ class sites(models.Model):
 
     def __str__(self):
         return u'%s %s %s %s %s %s %s %s %s' %(
-            self.id, self.name, self.alias_name, self.type, self.location, self.city, self.description, self.ipadd, self.tagline
+            self.id, self.name, self.alias_name, self.type, self.location, self.city, self.description, self.ip_address, self.tagline
         )
 
 class contacts(models.Model):
     id = models.AutoField(primary_key=True)
     site = models.ForeignKey(sites, on_delete=models.CASCADE, null=False)
     type = models.CharField(max_length=10, null=False, default='')
-    contact_number = models.CharField(max_length=50, null=False, default='')
+    contact_data = models.CharField(max_length=50, null=False, default='')
 
     class Meta:
         verbose_name_plural = "contacts"
