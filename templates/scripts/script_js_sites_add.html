@@ -114,13 +114,18 @@
                         $("div.steps ul li").removeClass("error");
                     }
                 }).validate({
-                            errorPlacement: function (error, element)
-                            {
-                                element.after(error);
-                            },
                             rules: {
                                 confirm: {
                                     equalTo: "#password"
+                                }
+                            },
+                            errorPlacement: function (error, element)
+                            {
+                                if (element.attr("name") == "contact[0][contact_data]"){
+                                    error.appendTo(element.parent().next());
+                                }
+                                else{
+                                    element.after(error);
                                 }
                             }
                         });

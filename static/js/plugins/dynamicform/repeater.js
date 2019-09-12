@@ -44,7 +44,7 @@ jQuery.fn.extend({
             /* Handling remove btn */
             var removeButton = itemClone.find('.remove-btn');
 
-            if (key == 0) {
+            if (key == 589764) {
                 removeButton.attr('disabled', true);
             } else {
                 removeButton.attr('disabled', false);
