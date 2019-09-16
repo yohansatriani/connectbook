@@ -19,6 +19,15 @@
         <script src="{% static 'js/plugins/validate/jquery.validate.min.js' %}"></script>
         <script>
             $(document).ready(function(){
+                jQuery.validator.addMethod("ipaddress", function (value, element) {
+                    if (/^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$/.test(value)) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    };
+                }, "Please enter a valid IP Address format.");
+
                 $.fn.steps.setStep = function (step)
                 {
                     var currentIndex = $(this).steps('getCurrentIndex');
@@ -33,6 +42,7 @@
                 };
 
                 $("#wizard").steps();
+
                 $("#site-form").steps({
                     /* Labels */
                     labels: {
@@ -115,13 +125,25 @@
                     }
                 }).validate({
                             rules: {
-                                confirm: {
-                                    equalTo: "#password"
-                                }
+                                name: {
+                                    required: true
+                                },
+                                ip_address: {
+                                    required: false,
+                                    ipaddress: true
+                                },
+                                add_field1: {
+                                    minlength: 3,
+                                    maxlength: 3
+                                },
+                                add_field2: {
+                                    minlength: 3,
+                                    maxlength: 3
+                                },
                             },
                             errorPlacement: function (error, element)
                             {
-                                if (element.attr("name") == "contact[0][contact_data]"){
+                                if (element.attr("data-name") == "contact_data"){
                                     error.appendTo(element.parent().next());
                                 }
                                 else{
