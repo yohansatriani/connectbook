@@ -154,6 +154,17 @@
 
             $(function(){$("#dynamic-contact").createRepeater();});
 
+            function inputChange() {
+                var inputBox = document.getElementsByClassName('input_contact');
+                if (this.value == 'EMAIL') {
+                    inputBox.type = 'email'
+                }
+                else {
+                    inputBox.type = 'text'
+                }
+            }
+
+            document.getElementsByClassName('custom-select').addEventListener('change', inputChange);
 
            });
     </script>
