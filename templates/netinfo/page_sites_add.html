@@ -75,7 +75,6 @@
                                             {% endif %}
                                         </div>
                                         {% endfor %}
-<<<<<<< HEAD
                                         <div class="hr-line-dashed"></div>
                                         <h5>Contacts</h5>
                                         <div id="dynamic-contact">
@@ -92,26 +91,6 @@
                                                     <input type="text" required class="col p-w-sm input_contact_data" data-skip-name="true" name="contact_data[]"/>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline btn-danger remove-btn" type="button">Remove</button>
-=======
-                                        </fieldset>
-                                        <h3>Contacts</h3>
-                                        <fieldset>
-                                            <div id="dynamic-contact">
-                                                <div class="repeater-heading m-b">
-                                                    <button type="button" class="btn btn-w-m btn-outline btn-primary repeater-add-btn">Add</button>
-                                                </div>
-                                                <div class="items" data-group="contact">
-                                                    <div class="input-group m-t" id="contact_grup">
-                                                        <select class="custom-select col-md-3" data-name="type">
-                                                            {% for item in contact_types %}
-                                                            <option value="item.contact_type">{{ item.contact_type|upper }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                        <input type="text" required class="col p-w-sm input_contact" data-name="contact_data">
-                                                        <div class="input-group-append">
-                                                            <button class="btn btn-outline btn-danger remove-btn" type="button" >Remove</button>
-                                                        </div>
->>>>>>> 774e92887cbeed5ab8671eba03231b190beb2605
                                                     </div>
                                                 </div>
                                             </div>
