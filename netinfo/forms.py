@@ -43,22 +43,23 @@ class SitesForm(forms.Form):
         label="IP Address",
         max_length=100,
         required=False,
+        initial='0.0.0.0/0',
         help_text='Example : 192.168.1.1 or 192.168.1.0/24',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'ipadd', 'name':'ipadd', 'pattern': '^(([0-9]|[1-9][0-9]|1[0-9]{2}|[1-2][0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|[1-2][0-4][0-9]|25[0-5])((/[0-9]|/[1-2][0-9]|/[1-3][0-2])?)$'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'ipadd', 'name':'ipadd' })
     )
     add_field1 = forms.CharField(
         label="Site code",
         max_length=3,
         required=False,
         help_text='Input 3 digits site code',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'site_code', 'name':'site_code', 'pattern': '\d{3}'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'site_code', 'name':'site_code' })
     )
     add_field2 = forms.CharField(
         label="Area code",
         max_length=3,
         required=False,
         help_text='Input 3 digits area code',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'area_code', 'name':'area_code', 'pattern': '\d{3}'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'area_code', 'name':'area_code', })
     )
     tagline = forms.CharField(
         label="Tagline",
