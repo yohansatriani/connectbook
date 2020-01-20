@@ -11,122 +11,23 @@
         <!-- jquery-ui-->
         <script src="{% static 'js/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
         <!-- dynamic-form-->
-        <script src="{% static 'js/plugins/dynamicform/dynamicForm.js' %}"></script>
         <script src="{% static 'js/plugins/dynamicform/repeater.js' %}"></script>
-        <!-- jquery steps -->
-        <script src="{% static 'js/plugins/steps/jquery.steps.min.js' %}"></script>
+        <!-- toastr -->
+        <script src="{% static 'js/plugins/toastr/toastr.min.js' %}"></script>
         <!-- validate.js -->
         <script src="{% static 'js/plugins/validate/jquery.validate.min.js' %}"></script>
         <script>
             $(document).ready(function(){
-                $.fn.steps.setStep = function (step)
-                {
-                    var currentIndex = $(this).steps('getCurrentIndex');
-                    for(var i = 0; i < Math.abs(step - currentIndex); i++){
-                        if(step > currentIndex) {
-                            $(this).steps('next');
+                $(function(){$("#dynamic-contact").createRepeater();});
+                $("#site-form").validate({
+                    errorPlacement: function(error, element) {
+                        if (element.attr("name") == "contact_data[]") {
+                            error.insertAfter(element.parent());
                         }
-                        else{
-                            $(this).steps('previous');
+                        else {
+                            error.insertAfter(element)
                         }
                     }
-                };
-
-                $("#wizard").steps();
-                $("#site-form").steps({
-                    /* Labels */
-                    labels: {
-                        cancel: "Reset",
-                        current: "current step:",
-                        pagination: "Pagination",
-                        finish: "Finish",
-                        next: "Next",
-                        previous: "Previous",
-                        loading: "Loading ..."
-                    },
-
-                    headerTag: "h3",
-                    bodyTag: "fieldset",
-                    // titleTemplate: "#title#",
-                    titleTemplate: '<center>#title#</center>',
-                    enableFinishButton: true,
-                    enableCancelButton: true,
-                    enablePagination: true,
-                    onStepChanging: function (event, currentIndex, newIndex)
-                    {
-                        // Always allow going backward even if the current step contains invalid fields!
-                        if (currentIndex > newIndex)
-                        {
-                            return true;
-                        }
-
-                        var form = $(this);
-
-                        // Clean up if user went backward before
-                        if (currentIndex < newIndex)
-                        {
-                            // To remove error styles
-                            $(".body:eq(" + newIndex + ") label.error", form).remove();
-                            $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                        }
-
-                        // Disable validation on fields that are disabled or hidden.
-                        form.validate().settings.ignore = ":disabled,:hidden";
-
-                        // Start validation; Prevent going forward if false
-                        return form.valid();
-                    },
-                    onStepChanged: function (event, currentIndex, priorIndex)
-                    {
-
-                        // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
-                        if (currentIndex === 2 && priorIndex === 3)
-                        {
-                            $(this).steps("previous");
-                        }
-                    },
-                    onFinishing: function (event, currentIndex)
-                    {
-                        var form = $(this);
-
-                        // Disable validation on fields that are disabled.
-                        // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-                        form.validate().settings.ignore = ":disabled";
-
-                        // Start validation; Prevent form submission if false
-                        return form.valid();
-                    },
-                    onFinished: function (event, currentIndex)
-                    {
-                        var form = $(this);
-
-                        // Submit form input
-                        form.submit();
-                    },
-                    onCanceled: function (event)
-                    {
-                        var validator = $( "#site-form" ).validate();
-                        var form = $(this);
-                        //reset form
-                        validator.resetForm();
-                        $('#site-form').trigger("reset");
-                        $("#site-form").steps("setStep", 0);
-                        $("div.steps ul li").removeClass("error");
-                    }
-                }).validate({
-                            errorPlacement: function (error, element)
-                            {
-                                element.after(error);
-                            },
-                            rules: {
-                                confirm: {
-                                    equalTo: "#password"
-                                }
-                            }
-                        });
-
-            $(function(){$("#dynamic-contact").createRepeater();});
-
-
-           });
-    </script>
+                });
+            });
+        </script>
