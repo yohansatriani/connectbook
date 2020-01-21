@@ -141,3 +141,15 @@ def sites_add(request):
         #breadcrumbs
         bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/add/', 'Add Site']]
         return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'sites_form': sites_form, 'contact_types': contact_types})
+
+@login_required()
+def sites_delete(request):
+    if request.method == 'POST':
+        site_id = request.POST['site_id']
+        site_del = get_object_or_404(sites_model, id=site_id)
+        site_name = site_del.name
+        site_del.delete()
+        messages.success(request, "Site "+site_name+" deleted succesfully.", extra_tags='success')
+        return redirect('sites')
+    else:
+        return redirect('sites')
