@@ -1,0 +1,153 @@
+{% extends "basic/page_skeleton.html" %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<!-- <html> -->
+    <!-- <head> -->
+        <!-- <meta charset="utf-8"> -->
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+        {% block title %}{{ title }}{% endblock %}
+        {% block css %}
+        {% include 'netinfo/comp_css_sites_edit.html' %}
+        {% endblock %}
+    <!-- </head> -->
+    <!-- <body> -->
+        <!-- <div id="wrapper"> -->
+            <!-- panel-left -->
+            {% block panel-left %}
+            {% include 'basic/comp_panel_left.html' %}
+            {% endblock %}
+            <!-- end panel-left -->
+            <!-- <div id="page-wrapper" class="gray-bg dashbard-1"> -->
+                <!-- row-top -->
+                {% block row-top %}
+                {% include 'basic/comp_row_top.html' %}
+                {% endblock %}
+                <!-- end row-top -->
+                <!-- row-mid -->
+                {% block row-mid %}
+                {% include 'basic/comp_row_mid.html' %}
+                {% endblock %}
+                <!-- end row-mid -->
+                <!-- row-content -->
+                {% block row-content %}
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-6">
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    <h5>Edit Site</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <form role="form" id="site-form" action="#" method="post">
+                                        {% csrf_token %}
+                                        {{ sites_form.non_field_errors }}
+                                        {% for field in sites_form.visible_fields %}
+                                        <div class="form-group row">
+                                            <label for="{{ field.id_for_label }}" class="col-lg-3 col-form-label">{{ field.label }}</label>
+                                            {% if sites_form.is_bound %}
+                                            {% if field.errors %}
+                                            <div class="col-lg-9">
+                                            {% render_field field class="form-control" %}
+                                            {% if field.help_text %}
+                                                <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                            {% endif %}
+                                            {% for error in field.errors %}
+                                                <label id="-error" class="error" for="">{{ error }}</label>
+                                            {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            <div class="col-lg-9">
+                                            {% render_field field class="form-control" %}
+                                            {% if field.help_text %}
+                                                <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                            {% endif %}
+                                            </div>
+                                            {% endif %}
+                                            {% else %}
+                                            <div class="col-lg-9">
+                                            {% render_field field class="form-control" %}
+                                            {% if field.help_text %}
+                                                <span class="form-text m-b-none">{{ field.help_text }}</span>
+                                            {% endif %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        {% endfor %}
+                                        <div class="hr-line-dashed"></div>
+                                        <h5>Contacts</h5>
+                                        <div id="dynamic-contact">
+                                            <div class="repeater-heading m-b">
+                                                <button type="button" class="btn btn-w-m btn-outline btn-primary repeater-add-btn">Add</button>
+                                            </div>
+                                            <div class="items" data-group="contact">
+                                                <div class="input-group m-t" id="contact_grup">
+                                                    <select class="custom-select col-md-3" data-skip-name="true" name="contact_type[]">
+                                                        {% for item in contact_types %}
+                                                        <option value="{{ item.contact_type }}">{{ item.contact_type|upper }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input type="text" required class="col p-w-sm input_contact_data" data-skip-name="true" name="contact_data[]"/>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline btn-danger remove-btn" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-4 col-sm-offset-2">
+                                                <button class="btn btn-danger btn-sm" type="reset">Reset</button>
+                                                <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+                <!-- end row-content -->
+                <!-- row-footer -->
+                {% block row-footer %}
+                {% include 'basic/comp_row_footer.html' %}
+                {% endblock %}
+                <!-- end row-footer -->
+            <!-- </div> -->
+            <!-- sidebar-right -->
+            {% block sidebar-right %}
+            {% endblock %}
+            <!-- end sidebar-right -->
+        <!-- </div> -->
+        <!-- script-js -->
+        {% block script-js %}
+        {% include 'scripts/script_js_sites_edit.html' %}
+        {% for message in messages %}
+        <script type=text/javascript>
+            $(document).ready(function(){
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "progressBar": false,
+                    "preventDuplicates": false,
+                    "positionClass": "toast-bottom-right",
+                    "onclick": null,
+                    "showDuration": "400",
+                    "hideDuration": "1000",
+                    "timeOut": "7000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.{{ message.extra_tags }}('{{ message|safe }}');
+            });
+        </script>
+        {% endfor %}
+        {% endblock %}
+        <!-- end script-js -->
+    <!-- </body> -->
+<!-- </html> -->

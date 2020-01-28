@@ -1,0 +1,33 @@
+        {% load static %}
+        <!-- Mainly scripts -->
+        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script src="{% static 'js/plugins/metisMenu/jquery.metisMenu.js' %}"></script>
+        <script src="{% static 'js/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+        <!-- Custom and plugin javascript -->
+        <script src="{% static 'js/inspinia.js' %}"></script>
+        <script src="{% static 'js/plugins/pace/pace.min.js' %}"></script>
+        <!-- jquery-ui-->
+        <script src="{% static 'js/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+        <!-- dynamic-form-->
+        <script src="{% static 'js/plugins/dynamicform/repeater.js' %}"></script>
+        <!-- toastr -->
+        <script src="{% static 'js/plugins/toastr/toastr.min.js' %}"></script>
+        <!-- validate.js -->
+        <script src="{% static 'js/plugins/validate/jquery.validate.min.js' %}"></script>
+        <script>
+            $(document).ready(function(){
+                $(function(){$("#dynamic-contact").createRepeater();});
+                $("#site-form").validate({
+                    errorPlacement: function(error, element) {
+                        if (element.attr("name") == "contact_data[]") {
+                            error.insertAfter(element.parent());
+                        }
+                        else {
+                            error.insertAfter(element)
+                        }
+                    }
+                });
+            });
+        </script>

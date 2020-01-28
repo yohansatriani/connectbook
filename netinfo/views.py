@@ -143,6 +143,106 @@ def sites_add(request):
         return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'sites_form': sites_form, 'contact_types': contact_types})
 
 @login_required()
+def sites_id_edit(request, site_id):
+    if request.method == 'POST':
+        bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/edit/', 'Edit Site']]
+        return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems})
+        # site_post_data = {
+        #     'id':1000,
+        #     'name':request.POST['name'],
+        #     'description':request.POST['description'],
+        #     'type':request.POST['type'],
+        #     'location':request.POST['location'],
+        #     'city':request.POST['city'],
+        #     'add_field1':request.POST['add_field1'],
+        #     'add_field2':request.POST['add_field2'],
+        #     'ip_address':request.POST['ip_address'],
+        #     'tagline':request.POST['tagline']
+        # }
+    #
+    #     site_form = SitesForm(site_post_data)
+    #
+    #     validsite = sites_model.objects.filter(name=site_post_data['name'].strip()).count()+sites_model.objects.filter(alias_name=site_post_data['name'].strip()).count()
+    #
+    #     pprint(validsite)
+    #
+    #     if validsite == 0:
+    #         if site_form.is_valid():
+    #             name = site_form.cleaned_data['name']
+    #             type = site_form.cleaned_data['type']
+    #             location = site_form.cleaned_data['location']
+    #             city = site_form.cleaned_data['city']
+    #             description = site_form.cleaned_data['description']
+    #             ip_address = site_form.cleaned_data['ip_address']
+    #             add_field1 = site_form.cleaned_data['add_field1']
+    #             add_field2 = site_form.cleaned_data['add_field2']
+    #             tagline = site_form.cleaned_data['tagline']
+    #
+    #             alias_name = name.replace(' ', '-').lower()
+    #
+    #             sites_add = sites_model(
+    #                 name=name,
+    #                 alias_name = alias_name,
+    #                 type=type,
+    #                 location=location,
+    #                 city=city,
+    #                 description=description,
+    #                 ip_address=ip_address,
+    #                 add_field1=add_field1,
+    #                 add_field2=add_field2,
+    #                 tagline=tagline,
+    #             )
+    #             sites_add.save()
+    #             site_id = sites_add.id;
+    #             messages.success(request, "Site "+sites_add.name+" added succesfully. For more information <a href=../name/"+sites_add.name+">Click Here</a>", extra_tags="success")
+    #
+    #             pprint(messages)
+    #
+    #             if 'contact_data[]' in request.POST:
+    #                 contacts_post_add_dataraw = [
+    #                     request.POST.getlist('contact_type[]'),
+    #                     request.POST.getlist('contact_data[]'),
+    #                 ]
+    #                 contacts_post_add_data=list(map(list, zip(*contacts_post_add_dataraw)))
+    #
+    #                 for contacts_post_add in contacts_post_add_data:
+    #                     contacts_model(site=sites_model.objects.get(id=int(site_id)), type=contacts_post_add[0], contact_data=contacts_post_add[1]).save()
+    #                     # messages.success(request, "Contact: "+contacts_post_add[0]+":"+contacts_post_add[1]+" added succesfully." , extra_tags='alert-success')
+    #
+    #             return redirect('sites_add')
+    #
+    #         else:
+    #             messages.error(request, 'Failed add Site.', extra_tags='danger')
+    #             bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/add/', 'Add Site']]
+    #             return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'site_form': site_form})
+    #     else:
+    #         messages.error(request, "Unable to add site. A site with name "+site_post_data['name']+" already exist.", extra_tags='error')
+    #         return redirect('sites_add')
+    else:
+        try:
+            site_id = int(site_id)
+        except ValueError:
+            raise Http404()
+
+        site_data = get_object_or_404(sites_model, id=site_id)
+
+        sites_form = SitesForm(initial={
+            'id': site_data.id,
+            'name': site_data.name,
+            'alias_name': site_data.alias_name,
+            'type': site_data.type,
+            'location': site_data.location,
+            'city': site_data.city,
+            'description':site_data.description,
+            'ip_address': site_data.ip_address,
+            'add_field1': site_data.add_field1,
+            'add_field2': site_data.add_field2,
+            'tagline': site_data.tagline,
+        })
+        bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/id/'+str(site_id)+'/', site_data.name], ['/sites/id/'+str(site_id)+'/edit', 'edit']]
+        return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'sites_form': sites_form})
+
+@login_required()
 def sites_delete(request):
     if request.method == 'POST':
         site_id = request.POST['site_id']
