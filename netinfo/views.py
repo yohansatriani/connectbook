@@ -73,12 +73,8 @@ def sites_add(request):
             'ip_address':request.POST['ip_address'],
             'tagline':request.POST['tagline']
         }
-
         site_form = SitesForm(site_post_data)
-
         validsite = sites_model.objects.filter(name=site_post_data['name'].strip()).count()+sites_model.objects.filter(alias_name=site_post_data['name'].strip()).count()
-
-        pprint(validsite)
 
         if validsite == 0:
             if site_form.is_valid():
@@ -109,8 +105,6 @@ def sites_add(request):
                 sites_add.save()
                 site_id = sites_add.id;
                 messages.success(request, "Site "+sites_add.name+" added succesfully. For more information <a href=../name/"+sites_add.name+">Click Here</a>", extra_tags="success")
-
-                pprint(messages)
 
                 if 'contact_data[]' in request.POST:
                     contacts_post_add_dataraw = [
@@ -239,8 +233,12 @@ def sites_id_edit(request, site_id):
             'add_field2': site_data.add_field2,
             'tagline': site_data.tagline,
         })
+
+        contact_data = contacts_model.objects.filter(site_id = site_id)
+        contact_types = contact_types_model.objects.values('contact_type')
+
         bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/id/'+str(site_id)+'/', site_data.name], ['/sites/id/'+str(site_id)+'/edit', 'edit']]
-        return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'sites_form': sites_form})
+        return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'sites_form': sites_form, 'contact_data': contact_data, 'contact_types': contact_types})
 
 @login_required()
 def sites_delete(request):

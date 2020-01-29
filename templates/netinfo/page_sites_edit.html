@@ -77,10 +77,34 @@
                                         {% endfor %}
                                         <div class="hr-line-dashed"></div>
                                         <h5>Contacts</h5>
+                                        <div id="existing-contact">
+
+                                        </div>
                                         <div id="dynamic-contact">
                                             <div class="repeater-heading m-b">
                                                 <button type="button" class="btn btn-w-m btn-outline btn-primary repeater-add-btn">Add</button>
                                             </div>
+                                            {% if contact_data %}
+                                            {% for contact in contact_data %}
+                                            <div class="existing-items" data-group="contact">
+                                                <div class="input-group m-t" id="contact_grup">
+                                                    <select class="custom-select col-md-3" data-skip-name="true" name="contact_type[]">
+                                                    {% for item in contact_types %}
+                                                        {% if contact.type == item.contact_type %}
+                                                        <option value="{{ item.contact_type }}" selected="selected">{{ item.contact_type|upper }}</option>
+                                                        {% else %}
+                                                        <option value="{{ item.contact_type }}">{{ item.contact_type|upper }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </select>
+                                                    <input type="text" required class="col p-w-sm input_contact_data" data-skip-name="true" name="contact_data[]" value="{{ contact.contact_data }}"/>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline btn-danger remove-btn" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% endif %}
                                             <div class="items" data-group="contact">
                                                 <div class="input-group m-t" id="contact_grup">
                                                     <select class="custom-select col-md-3" data-skip-name="true" name="contact_type[]">
