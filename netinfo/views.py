@@ -139,53 +139,83 @@ def sites_add(request):
 @login_required()
 def sites_id_edit(request, site_id):
     if request.method == 'POST':
-        bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/edit/', 'Edit Site']]
-        return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems})
-        # site_post_data = {
-        #     'id':1000,
-        #     'name':request.POST['name'],
-        #     'description':request.POST['description'],
-        #     'type':request.POST['type'],
-        #     'location':request.POST['location'],
-        #     'city':request.POST['city'],
-        #     'add_field1':request.POST['add_field1'],
-        #     'add_field2':request.POST['add_field2'],
-        #     'ip_address':request.POST['ip_address'],
-        #     'tagline':request.POST['tagline']
-        # }
+        site_id = int(request.POST['id'])
+
+        site_post_data = {
+            'id':1000,
+            'name':request.POST['name'],
+            'description':request.POST['description'],
+            'type':request.POST['type'],
+            'location':request.POST['location'],
+            'city':request.POST['city'],
+            'add_field1':request.POST['add_field1'],
+            'add_field2':request.POST['add_field2'],
+            'ip_address':request.POST['ip_address'],
+            'tagline':request.POST['tagline']
+        }
+
+        site_data = sites_model.objects.get(id=int(request.POST['id']))
+
+        site_db_data = {
+            'id': site_data.id,
+            'name': site_data.name,
+            'description':site_data.description,
+            'type': site_data.type,
+            'location': site_data.location,
+            'city': site_data.city,
+            'add_field1': site_data.add_field1,
+            'add_field2': site_data.add_field2,
+            'ip_address': site_data.ip_address,
+            'tagline': site_data.tagline,
+        }
+
+        site_form = SitesForm(site_post_data)
+        validsite = sites_model.objects.filter(name=site_post_data['name'].strip()).count()+sites_model.objects.filter(alias_name=site_post_data['name'].strip()).count()
+
+        # site update process
+        if validsite == 0:
+            site_form = SitesForm(site_post_data, initial=site_db_data)
+            if site_form.is_valid():
+                if site_form.has_changed():
+                    for changed_data in site_form.changed_data:
+                        setattr(site_data, changed_data, site_post_data[changed_data])
+                        site_data.save()
+                    messages.success(request, "Site "+sites_add.name+" edited succesfully.", extra_tags="success")
+                    return redirect('site_detail', site_id=site_post_data['id'])
+                else:
+                    messages.info(request, "Site "+sites_add.name+" not changed.", extra_tags="info")
+                    return redirect('site_detail', site_id=site_post_data['id'])
+            else:
+                messages.error(request, 'Failed updating Site Information.', extra_tags='alert-danger')
+                # breadcrumbs
+                bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
+                return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
+        else:
+            messages.error(request, "Unable to edit site. A site with name "+site_post_data['name']+" already exist.", extra_tags='error')
+            return redirect('sites_edit', site_id=site_post_data['id'])
+    #    if validsite == 0:
+    #        if site_form.is_valid():
+    #            type = site_form.cleaned_data['type']
+    #            location = site_form.cleaned_data['location']
+    #            city = site_form.cleaned_data['city']
+    #            description = site_form.cleaned_data['description']
+    #            add_field1 = site_form.cleaned_data['add_field1']
+    #            add_field2 = site_form.cleaned_data['add_field2']
+    #            tagline = site_form.cleaned_data['tagline']
+    #            alias_name = name.replace(' ', '-').lower()
     #
-    #     site_form = SitesForm(site_post_data)
-    #
-    #     validsite = sites_model.objects.filter(name=site_post_data['name'].strip()).count()+sites_model.objects.filter(alias_name=site_post_data['name'].strip()).count()
-    #
-    #     pprint(validsite)
-    #
-    #     if validsite == 0:
-    #         if site_form.is_valid():
-    #             name = site_form.cleaned_data['name']
-    #             type = site_form.cleaned_data['type']
-    #             location = site_form.cleaned_data['location']
-    #             city = site_form.cleaned_data['city']
-    #             description = site_form.cleaned_data['description']
-    #             ip_address = site_form.cleaned_data['ip_address']
-    #             add_field1 = site_form.cleaned_data['add_field1']
-    #             add_field2 = site_form.cleaned_data['add_field2']
-    #             tagline = site_form.cleaned_data['tagline']
-    #
-    #             alias_name = name.replace(' ', '-').lower()
-    #
-    #             sites_add = sites_model(
-    #                 name=name,
-    #                 alias_name = alias_name,
-    #                 type=type,
-    #                 location=location,
-    #                 city=city,
-    #                 description=description,
-    #                 ip_address=ip_address,
-    #                 add_field1=add_field1,
-    #                 add_field2=add_field2,
-    #                 tagline=tagline,
-    #             )
+    #            sites_add = sites_model(
+    #                name=name,
+    #                alias_name = alias_name,
+    #                type=type,
+    #                location=location,
+    #                city=city,
+    #                description=description,
+    #                ip_address=ip_address,
+    #                add_field1=add_field1,
+    #                add_field2=add_field2,
+    #                tagline=tagline,
+    #            )
     #             sites_add.save()
     #             site_id = sites_add.id;
     #             messages.success(request, "Site "+sites_add.name+" added succesfully. For more information <a href=../name/"+sites_add.name+">Click Here</a>", extra_tags="success")
@@ -221,7 +251,7 @@ def sites_id_edit(request, site_id):
         site_data = get_object_or_404(sites_model, id=site_id)
 
         sites_form = SitesForm(initial={
-            'id': site_data.id,
+            'id': site_id,
             'name': site_data.name,
             'alias_name': site_data.alias_name,
             'type': site_data.type,
