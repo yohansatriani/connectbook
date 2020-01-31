@@ -193,7 +193,7 @@ def sites_id_edit(request, site_id):
             else:
                 messages.error(request, 'Failed updating Site Information.', extra_tags='alert-danger')
                 # breadcrumbs
-                bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
+                bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['Edit', 'Edit']]
                 return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'site_form': site_form, 'contact_data': contact_data, 'contact_types': contact_types, 'site_id':site_id})
         else:
             site_form = SitesForm(initial={
@@ -212,7 +212,7 @@ def sites_id_edit(request, site_id):
 
             messages.error(request, "Unable to edit site. Site "+site_post_data['name']+" already exist.", extra_tags='error')
             # breadcrumbs
-            bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
+            bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/name/'+site_data.alias_name+'/', site_data.name], ['Edit', 'Edit']]
             return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'site_form': site_form, 'contact_data': contact_data, 'contact_types': contact_types, 'site_id':site_id})
     #    if validsite == 0:
     #        if site_form.is_valid():
@@ -288,7 +288,7 @@ def sites_id_edit(request, site_id):
         contact_data = contacts_model.objects.filter(site_id = site_id)
         contact_types = contact_types_model.objects.values('contact_type')
 
-        bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/id/'+str(site_id)+'/', site_data.name], ['/sites/id/'+str(site_id)+'/edit', 'edit']]
+        bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/name/'+site_data.alias_name+'/', site_data.name], ['Edit', 'Edit']]
         return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'site_form': site_form, 'contact_data': contact_data, 'contact_types': contact_types, 'site_id':site_id})
 
 @login_required()

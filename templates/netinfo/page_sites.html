@@ -73,13 +73,13 @@
                                                         <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#{{ site.alias_name }}Modal"><i class="fa fa-times"></i></button>
                                                         <div class="modal inmodal" id="{{ site.alias_name }}Modal" tabindex="-1" role="dialog" aria-hidden="true">
                                                             <div class="modal-dialog">
-                                                                <div class="modal-content animated fadeIn">
+                                                                <div class="modal-content animated fadeIn text-center">
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">Delete Site</h4>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <p>Are you sure you want to permanently delete this site?<br/>Site Name: <span class="font-bold">{{ site.name }}</span><br/>This action cannot be undone!</p>
-                                                                        <form role="form" action="/sites/del/" method="post">
+                                                                        <form role="form" action="{% url 'sites_delete' %}" method="post">
                                                                             {% csrf_token %}
                                                                             <input type='hidden' name='site_id' value='{{ site.id }}' class='form-control'>
                                                                             <button type="submit" class="btn btn-danger btn-sm">Yes</button>

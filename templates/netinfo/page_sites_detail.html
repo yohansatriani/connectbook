@@ -49,9 +49,27 @@
                                                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>
                                                         <ul class="dropdown-menu dropdown-user">
-                                                            <li><a href="edit" class="dropdown-item">Edit</a></li>
-                                                            <li><a href="delete" class="dropdown-item">Delete</a></li>
+                                                            <li><a href="{% url 'sites_id_edit' site_data.id %}" class="dropdown-item">Edit</a></li>
+                                                            <li><a data-toggle="modal" data-target="#{{ site_data.alias_name }}Modal" class="dropdown-item">Delete</a></li>
                                                         </ul>
+                                                    </div>
+                                                    <div class="modal inmodal" id="{{ site_data.alias_name }}Modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content animated fadeIn text-center">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Delete Site</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to permanently delete this site?<br/>Site Name: <span class="font-bold">{{ site.name }}</span><br/>This action cannot be undone!</p>
+                                                                    <form role="form" action="{% url 'sites_delete' %}" method="post">
+                                                                        {% csrf_token %}
+                                                                        <input type='hidden' name='site_id' value='{{ site_data.id }}' class='form-control'>
+                                                                        <button type="submit" class="btn btn-danger btn-sm">Yes</button>
+                                                                        <button type="button" class="btn btn-white btn-sm" data-dismiss="modal">Cancel</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="ibox-content">
