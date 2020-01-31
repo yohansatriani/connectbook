@@ -130,11 +130,11 @@ def sites_add(request):
         contact_types = contact_types_model.objects.values('contact_type')
         # contact_types_json = json.dumps(list(contact_types), cls=DjangoJSONEncoder)
 
-        sites_form = SitesForm()
+        site_form = SitesForm()
 
         #breadcrumbs
         bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/add/', 'Add Site']]
-        return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'sites_form': sites_form, 'contact_types': contact_types})
+        return render(request, 'netinfo/page_sites_add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'site_form': site_form, 'contact_types': contact_types})
 
 @login_required()
 def sites_id_edit(request, site_id):
@@ -142,7 +142,7 @@ def sites_id_edit(request, site_id):
         site_id = int(request.POST['id'])
 
         site_post_data = {
-            'id':1000,
+            'id':site_id,
             'name':request.POST['name'],
             'description':request.POST['description'],
             'type':request.POST['type'],
@@ -172,27 +172,48 @@ def sites_id_edit(request, site_id):
         site_form = SitesForm(site_post_data)
         validsite = sites_model.objects.filter(name=site_post_data['name'].strip()).count()+sites_model.objects.filter(alias_name=site_post_data['name'].strip()).count()
 
+        contact_data = contacts_model.objects.filter(site_id = site_id)
+        contact_types = contact_types_model.objects.values('contact_type')
+
         # site update process
-        if validsite == 0:
+        if (validsite == 0) or (site_post_data['name'] == site_db_data['name']):
             site_form = SitesForm(site_post_data, initial=site_db_data)
+
             if site_form.is_valid():
                 if site_form.has_changed():
                     for changed_data in site_form.changed_data:
+                        pprint(changed_data)
                         setattr(site_data, changed_data, site_post_data[changed_data])
                         site_data.save()
-                    messages.success(request, "Site "+sites_add.name+" edited succesfully.", extra_tags="success")
-                    return redirect('site_detail', site_id=site_post_data['id'])
+                    messages.success(request, "Site "+site_post_data['name']+" edited succesfully.", extra_tags="success")
+                    return redirect('sites_detail_id', site_id)
                 else:
-                    messages.info(request, "Site "+sites_add.name+" not changed.", extra_tags="info")
-                    return redirect('site_detail', site_id=site_post_data['id'])
+                    messages.info(request, "No changed data on Site "+site_post_data['name']+".", extra_tags="info")
+                    return redirect('sites_detail_id', site_id)
             else:
                 messages.error(request, 'Failed updating Site Information.', extra_tags='alert-danger')
                 # breadcrumbs
                 bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
-                return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
+                return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'site_form': site_form, 'contact_data': contact_data, 'contact_types': contact_types, 'site_id':site_id})
         else:
-            messages.error(request, "Unable to edit site. A site with name "+site_post_data['name']+" already exist.", extra_tags='error')
-            return redirect('sites_edit', site_id=site_post_data['id'])
+            site_form = SitesForm(initial={
+                'id': site_id,
+                'name': site_data.name,
+                'alias_name': site_data.alias_name,
+                'type': site_data.type,
+                'location': site_data.location,
+                'city': site_data.city,
+                'description':site_data.description,
+                'ip_address': site_data.ip_address,
+                'add_field1': site_data.add_field1,
+                'add_field2': site_data.add_field2,
+                'tagline': site_data.tagline,
+            })
+
+            messages.error(request, "Unable to edit site. Site "+site_post_data['name']+" already exist.", extra_tags='error')
+            # breadcrumbs
+            bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
+            return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'site_form': site_form, 'contact_data': contact_data, 'contact_types': contact_types, 'site_id':site_id})
     #    if validsite == 0:
     #        if site_form.is_valid():
     #            type = site_form.cleaned_data['type']
@@ -250,7 +271,7 @@ def sites_id_edit(request, site_id):
 
         site_data = get_object_or_404(sites_model, id=site_id)
 
-        sites_form = SitesForm(initial={
+        site_form = SitesForm(initial={
             'id': site_id,
             'name': site_data.name,
             'alias_name': site_data.alias_name,
@@ -268,7 +289,7 @@ def sites_id_edit(request, site_id):
         contact_types = contact_types_model.objects.values('contact_type')
 
         bcitems = [['/home/', 'Home'], ['#', 'Network Info'], ['/sites/', 'Sites'],['/sites/id/'+str(site_id)+'/', site_data.name], ['/sites/id/'+str(site_id)+'/edit', 'edit']]
-        return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'sites_form': sites_form, 'contact_data': contact_data, 'contact_types': contact_types})
+        return render(request, 'netinfo/page_sites_edit.html', {'title': "Edit Site", 'head': "Edit Site", 'bcitems': bcitems, 'site_form': site_form, 'contact_data': contact_data, 'contact_types': contact_types, 'site_id':site_id})
 
 @login_required()
 def sites_delete(request):
