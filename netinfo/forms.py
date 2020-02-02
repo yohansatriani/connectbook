@@ -15,6 +15,9 @@ class SitesForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'name', 'name':'name'})
     )
+    alias_name = forms.CharField(
+        widget=forms.HiddenInput(attrs={'class': 'form-control', 'id': 'alias_name', 'name':'alias_name'})
+    )
     SITE_TYPE = (('PP', 'PP'),('KK', 'KK'),('KCP', 'KCP'),('KC', 'KC'),('KP', 'KP'),('DC', 'DC'),('ISP', 'ISP'),('PARTNER', 'PARTNER'))
     type = forms.ChoiceField(
         label="Type",
@@ -66,4 +69,18 @@ class SitesForm(forms.Form):
         max_length=500,
         required=False,
         widget=forms.Textarea(attrs={'class': 'form-control', 'id' : 'tagline', 'name':'tagline', 'rows':2})
+    )
+
+class ContactsForm(forms.Form):
+    id = forms.IntegerField(
+        widget=forms.HiddenInput(attrs={'class': 'form-control', 'name':'id'})
+    )
+    contact_type = forms.CharField(
+        label="Type",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'name':'contact_type'})
+    )
+    contact_data = forms.CharField(
+        label="Number",
+        max_length=50,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'name':'contact_number', 'pattern': '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'})
     )

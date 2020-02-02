@@ -20,7 +20,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from connectbook.views import inspinia, home, auth_login, auth_process, auth_logout
-from netinfo.views import sites, sites_detail, sites_detail_id, sites_add, sites_delete, sites_id_edit
+from netinfo.views import sites, sites_detail, sites_detail_id, sites_add, sites_delete, sites_edit, sites_edit_id
 
 handler404 = 'connectbook.views.error404'
 handler500 = 'connectbook.views.error500'
@@ -47,7 +47,9 @@ urlpatterns = [
     #SITES_ADD
     path('sites/add/', sites_add, name='sites_add'),
     #SITES_EDIT
-    path('sites/id/<int:site_id>/edit/', sites_id_edit, name='sites_id_edit'),
+    path('sites/name/<slug:alias_name>/edit/', sites_edit, name='sites_edit'),
+    #SITES_EDIT_ID
+    path('sites/id/<int:site_id>/edit/', sites_edit_id, name='sites_edit_id'),
     #SITES_DEL
     path('sites/del/', sites_delete, name='sites_delete'),
 ]

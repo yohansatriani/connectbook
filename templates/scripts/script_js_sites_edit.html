@@ -29,5 +29,10 @@
                         }
                     }
                 });
+
+                $('.delete-contact').click(function(){
+                    $(this).parent().siblings('.contact_id').attr('name', 'contact_id_del[]');
+                    $(this).closest('.input-group').hide();
+                });
             });
         </script>

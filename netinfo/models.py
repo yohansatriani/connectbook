@@ -35,5 +35,5 @@ class contacts(models.Model):
 
     def __str__(self):
         return u'%s %s %s' %(
-            self.site, self.type, self.contact_number
+            self.site, self.type, self.contact_data
         )
